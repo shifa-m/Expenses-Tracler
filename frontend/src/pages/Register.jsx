@@ -1,52 +1,49 @@
 import { useState } from "react";
-import {Link , useNavigate} from "react-router-dom"
-import {useAuth} from ""
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
 
+const Register = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const { register } = useAuth();
+  const navigate = useNavigate();
 
-const Register=()=>{
-            const [name, setName] = useState("")
-            const [email, setEmail] = useState("")
-            const [password, setPassword] = useState("")
-            const [error, setError] = useState("")
-            const {register}=useAuth()
-            const navigate=useNavigate()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    try {
+      await register(name, email, password);
+      navigate("/");
+    } catch (err) {
+      setError(err.response?.data?.message || "Registration failed");
+    }
+  };
 
-            const handleSubmit=(e)=>{
-                        e.preventDefault()
-
-                        setError("")
-                        try{
-                                    await register(name,email,password)
-                                    navigate("/")
-
-                        }catch(err){
-                                    setError(err.response?.data?.message||"Registration failed")
-                        }
-
-            }
-
-            return(
-                        <div className="min-h-[80vh] flex items-center justify-center px-6">
+  return (
+    <div className="min-h-[80vh] flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
         <h1 className="font-display text-3xl mb-1 text-ink">Create your ledger</h1>
         <p className="text-ink/60 text-sm mb-8">Start tracking in under a minute.</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-                      <di>
+          <div>
             <label className="text-sm text-ink/70">Name</label>
-             <input
+            <input
               type="text"
               value={name}
-              onChange={(e)=>setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
               required
-              className="w-full mt-1 px-3 py-2 border border-mist rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-moss/40"/>
-              </div>
+              className="w-full mt-1 px-3 py-2 border border-mist rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-moss/40"
+            />
+          </div>
           <div>
             <label className="text-sm text-ink/70">Email</label>
             <input
               type="email"
               value={email}
-              onChange={(e)=>setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               required
               className="w-full mt-1 px-3 py-2 border border-mist rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-moss/40"
             />
@@ -85,5 +82,3 @@ const Register=()=>{
 };
 
 export default Register;
-
-        

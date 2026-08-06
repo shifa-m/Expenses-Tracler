@@ -1,11 +1,10 @@
 import React from 'react'
+import axios from "axios"
 
-const axios = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+const api=axios.create({
+  baseURL:"http://localhost:5000/api",
+  withCredentials:true
+})
 
-export default axios
+
+export default api

@@ -1,43 +1,38 @@
-import { useEffect,useState } from "react";
-import api from "../api/axios/js"
+import { useEffect, useState } from "react";
+import api from "../api/axios.js";
 
-const Categories=()=>{
+const Categories = () => {
+  const [categories, setCategories] = useState([]);
+  const [name, setName] = useState("");
+  const [error, setError] = useState("");
 
-            const [categories, setCategories] = useState([])
-            const [name, setName] = useState("")
-            const [error, setError] = useState("")
+  const fetchCategories = async () => {
+    const res = await api.get("/categories");
+    setCategories(res.data.categories);
+  };
 
-            const fetchCategories=async()=>{
-                        const res=await api.get("/categories")
-                        setCategories(res.data.categories)
-            }
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
-            useEffect(()=>{
-                        fetchCategories();
-            },[])
+  const handleAdd = async (e) => {
+    e.preventDefault();
+    setError("");
+    try {
+      await api.post("/categories", { name });
+      setName("");
+      fetchCategories();
+    } catch (err) {
+      setError(err.response?.data?.message || "Could not add category");
+    }
+  };
 
-            const handleAdd=(e)=>{
-                        e.preventDefault();
-                        setError("")
-                        try{
-                                    await api.post("/categories",{name})
-                                    setName("");
-                                    fetchCategories()
-                        }catch(err){
+  const handleDelete = async (id) => {
+    await api.delete(`/categories/${id}`);
+    fetchCategories();
+  };
 
-                                    setError(err.response?.data?.message||"Could add not category")
-
-                        }
-
-            }
-
-            const handledelete=()=>{
-                        await api.delete(`/categories/${id}`)
-                        fetchCategories()
-            }
-
-
- return (
+  return (
     <div className="max-w-2xl mx-auto px-6 py-10">
       <h1 className="font-display text-3xl text-ink mb-1">Categories</h1>
       <p className="text-ink/60 text-sm mb-8">Organize expenses however makes sense to you.</p>

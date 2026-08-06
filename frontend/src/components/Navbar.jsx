@@ -10,3 +10,5 @@ const Navbar=()=>{
                         navigate("/login")
             }
 }
+
+export default Navbar
