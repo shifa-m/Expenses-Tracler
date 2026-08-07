@@ -28,7 +28,7 @@ export const createCategory=async (req,res)=>{
             }
 }
 
-export const getCategory=async(req,res)=>{
+export const getCategories=async(req,res)=>{
 
             try{
 
