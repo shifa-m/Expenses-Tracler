@@ -14,6 +14,15 @@ connectDB()
 const app=express()
 
 
+
+app.use(
+            cors({
+                        origin: "http://localhost:5173", 
+                        credentials: true,
+            })
+)
+
+
 app.use(express.json())
 app.use(cookieParser())
 
@@ -22,7 +31,7 @@ app.use("/api/categories",categoryRoutes)
 app.use("/api/expenses",expensesRoutes)
 app.use("/api/dashboard",dashboardRoutes)
 
-app.use((err,res,req,next)=>{
+app.use((err,req,res,next)=>{
             console.log(err.stack)
             res.status(500).json({
                         message:"Something went wong"

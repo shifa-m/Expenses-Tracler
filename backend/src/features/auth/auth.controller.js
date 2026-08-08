@@ -80,7 +80,7 @@ export const loginUser=async(req,res)=>{
 
 }
 
-export const logout=async(req,res)=>{
+export const logoutUser=async(req,res)=>{
 
             res.cookies("token",{
 

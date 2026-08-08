@@ -15,7 +15,7 @@ const categorySchema=new mongoose.Schema({
 {timestamps:true}
 )
 
-expensesSchema.index({name:1,user:1},{unique:true})
+categorySchema.index({name:1,user:1},{unique:true})
 
 const Category=mongoose.model("Category",categorySchema)
 
